@@ -1,7 +1,7 @@
 # DeepSeek Harness Desktop
 
-[![CI](https://github.com/hongfeiyucode/deepseek-harness-desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/hongfeiyucode/deepseek-harness-desktop/actions/workflows/ci.yml)
-[![GitHub release](https://img.shields.io/github/v/release/hongfeiyucode/deepseek-harness-desktop?include_prereleases&label=release)](https://github.com/hongfeiyucode/deepseek-harness-desktop/releases)
+[![CI](https://github.com/a1647517212/deepseek-harness-desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/a1647517212/deepseek-harness-desktop/actions/workflows/ci.yml)
+[![GitHub release](https://img.shields.io/github/v/release/a1647517212/deepseek-harness-desktop?include_prereleases&label=release)](https://github.com/a1647517212/deepseek-harness-desktop/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **DeepSeek Harness Desktop** is the desktop client of [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): no terminal, no Node.js installation, no `dsh web` command. Double-click the icon and the full DeepSeek Harness web GUI opens in its own window.
@@ -52,7 +52,7 @@ flowchart LR
 
 ## Getting started
 
-Download the latest installer for your platform from [Releases](https://github.com/hongfeiyucode/deepseek-harness-desktop/releases):
+Download the latest installer for your platform from [Releases](https://github.com/a1647517212/deepseek-harness-desktop/releases):
 
 | Platform | Artifact | Notes |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ After installation, launch **DeepSeek Harness Desktop** like any other applicati
 Requires Node.js ≥ 22.12:
 
 ```sh
-git clone https://github.com/hongfeiyucode/deepseek-harness-desktop.git
+git clone https://github.com/a1647517212/deepseek-harness-desktop.git
 cd deepseek-harness-desktop
 npm install
 npm start          # run the app (Electron + embedded engine)
@@ -130,7 +130,7 @@ flowchart LR
     curl -X POST \
       -H "Authorization: token ${{ secrets.DESKTOP_REPO_PAT }}" \
       -H "Accept: application/vnd.github.everest-preview+json" \
-      https://api.github.com/repos/hongfeiyucode/deepseek-harness-desktop/dispatches \
+      https://api.github.com/repos/a1647517212/deepseek-harness-desktop/dispatches \
       -d '{"event_type": "upstream-published"}'
 ```
 

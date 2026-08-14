@@ -8,10 +8,10 @@
     "name": "hongfeiyucode",
     "email": "hongfeiyucode@users.noreply.github.com"
   },
-  "homepage": "https://github.com/hongfeiyucode/deepseek-harness-desktop",
+  "homepage": "https://github.com/a1647517212/deepseek-harness-desktop",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hongfeiyucode/deepseek-harness-desktop.git"
+    "url": "git+https://github.com/a1647517212/deepseek-harness-desktop.git"
   },
   "private": true,
   "type": "module",
@@ -65,7 +65,7 @@
     "npmRebuild": false,
     "publish": {
       "provider": "github",
-      "owner": "hongfeiyucode",
+      "owner": "a1647517212",
       "repo": "deepseek-harness-desktop"
     },
     "directories": {
