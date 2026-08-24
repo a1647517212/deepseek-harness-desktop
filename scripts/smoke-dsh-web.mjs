@@ -104,7 +104,8 @@ const exit = await new Promise((resolve) => {
     resolve({ code, signal })
   })
 })
-if (exit.code !== 0) {
+const cleanExit = exit.code === 0 || (process.platform === 'win32' && exit.code === null && exit.signal === 'SIGTERM')
+if (!cleanExit) {
   fail(`engine did not shut down cleanly: code ${String(exit.code)} signal ${String(exit.signal)}`)
 }
 

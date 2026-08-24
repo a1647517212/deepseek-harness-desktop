@@ -12,7 +12,7 @@ import { HARNESS_LOG_FILENAME, HARNESS_PORTS, HarnessServer, pickPort, resolveDs
 import { MAIN_LOG_FILENAME, initLogs, log, readTail } from './log.mjs'
 import { installAppMenu } from './menu.mjs'
 import { initUpdater } from './updater.mjs'
-import { ERROR_PAGE, LOADING_PAGE, createMainWindow } from './window.mjs'
+import { ERROR_PAGE, LOADING_PAGE, createMainWindow, hasDesktopBridge } from './window.mjs'
 
 /** Extra candidate ports a power user may prepend; comma-separated. */
 const PORT_ENV = 'DSH_DESKTOP_PORT'
@@ -176,8 +176,11 @@ if (!app.requestSingleInstanceLock()) {
     installAppMenu()
     registerIpc()
     log('info', `deepseek-harness-desktop ${app.getVersion()} starting (embedded @deepseek-ai/dsh ${resolveDshVersion()})`)
-    openWindow()
+    const win = openWindow()
     try {
+      if (process.env.DSH_DESKTOP_SMOKE === '1' && !await hasDesktopBridge(win)) {
+        throw new Error('desktop smoke: preload bridge unavailable on local page')
+      }
       await bootAndNavigate()
       initUpdater()
       // CI-only hook (see ci.yml): prove the full Electron path — spawn with

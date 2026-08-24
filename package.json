@@ -1,7 +1,7 @@
 {
   "name": "deepseek-harness-desktop",
   "productName": "DeepSeek Harness Desktop",
-  "version": "0.1.0-rc.6.1",
+  "version": "0.1.1-rc.2.0",
   "description": "Desktop client for DeepSeek Harness: double-click to launch, the official web GUI runs self-hosted from the embedded @deepseek-ai/dsh engine. No terminal, no Node.js required.",
   "license": "MIT",
   "author": {
@@ -31,27 +31,27 @@
     "check:upstream": "node scripts/check-upstream.mjs"
   },
   "dependencies": {
-    "@deepseek-ai/dsh": "0.1.0-rc.6",
+    "@deepseek-ai/dsh": "0.1.1-rc.2",
     "electron-updater": "6.8.9",
     "@deepseek-ai/cordis-plugin-group": "^1.0.1",
-    "@deepseek-ai/dsh-anonymous-user-id": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-atomic-write": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-bash-local": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-code-runtime": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-compaction": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-fs": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-invariants": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-output-retention": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-sandbox": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-scope": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-session-telemetry": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-session-title-llm": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-shell": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-spill": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-subagent-in-process-driver": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-subprocess": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-timeout": "^0.1.0-rc.6",
-    "@deepseek-ai/dsh-workflow": "^0.1.0-rc.6"
+    "@deepseek-ai/dsh-anonymous-user-id": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-atomic-write": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-bash-local": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-code-runtime": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-compaction": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-fs": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-invariants": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-output-retention": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-sandbox": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-scope": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-session-telemetry": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-session-title-llm": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-shell": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-spill": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-subagent-in-process-driver": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-subprocess": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-timeout": "0.1.1-rc.2",
+    "@deepseek-ai/dsh-workflow": "0.1.1-rc.2"
   },
   "devDependencies": {
     "electron": "43.4.0",
@@ -72,6 +72,7 @@
       "buildResources": "build",
       "output": "dist"
     },
+    "artifactName": "DeepSeek-Harness-Desktop-${version}-${os}-${arch}.${ext}",
     "files": [
       "src/**/*",
       "package.json",

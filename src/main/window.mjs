@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 /** Preload script; the sandboxed renderer gets only the `desktop` bridge. */
-export const PRELOAD_PATH = join(__dirname, '../preload/preload.mjs')
+export const PRELOAD_PATH = join(__dirname, '../preload/preload.cjs')
 
 /** Shown while the engine boots. */
 export const LOADING_PAGE = join(__dirname, '../renderer/loading.html')
@@ -64,4 +64,15 @@ export function createMainWindow() {
   win.once('ready-to-show', () => { win.show() })
   void win.loadFile(LOADING_PAGE)
   return win
+}
+
+/** Verify that the local page received the sandboxed preload bridge. */
+export async function hasDesktopBridge(win) {
+  if (win.webContents.isLoading()) {
+    await new Promise((resolve) => { win.webContents.once('did-finish-load', resolve) })
+  }
+  return win.webContents.executeJavaScript(
+    "Boolean(window.desktop && typeof window.desktop.getInfo === 'function')",
+    true,
+  )
 }

@@ -43,26 +43,6 @@
     </div>
     <p class="meta" id="meta"></p>
   </div>
-  <script>
-    const $ = (id) => document.getElementById(id);
-    function render(info) {
-      $('error').textContent = info.error || 'Unknown error';
-      $('tail').textContent = info.harnessLogTail || '(no harness log output)';
-      $('meta').textContent =
-        'Desktop v' + info.appVersion + ' · embedded harness v' + info.dshVersion +
-        ' · engine log: ' + info.harnessLogPath + ' · DSH_HOME: ' + info.dshHome;
-    }
-    if (window.desktop) {
-      window.desktop.getInfo().then(render).catch(() => {});
-      $('restart').addEventListener('click', () => {
-        $('restart').disabled = true;
-        $('error').textContent = 'Restarting the engine…';
-        window.desktop.restartHarness().catch(() => {});
-      });
-      $('quit').addEventListener('click', () => { window.desktop.quit(); });
-    } else {
-      $('error').textContent = 'Desktop bridge unavailable.';
-    }
-  </script>
+  <script src="./error.js"></script>
 </body>
 </html>

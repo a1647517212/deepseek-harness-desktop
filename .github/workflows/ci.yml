@@ -28,7 +28,7 @@ jobs:
 
       - name: Syntax check
         run: |
-          for file in src/main/*.mjs src/preload/*.mjs scripts/*.mjs; do
+          for file in src/main/*.mjs src/preload/*.cjs src/renderer/*.js scripts/*.mjs; do
             node --check "$file"
           done
 

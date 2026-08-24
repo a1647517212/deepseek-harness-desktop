@@ -108,7 +108,7 @@ flowchart LR
     C -- newer version --> B["pin + version bump<br/>(scripts/release-plan.mjs)"]
     C -- unchanged --> X[do nothing]
     B --> M[build matrix<br/>Windows · macOS · Linux]
-    M --> R[GitHub Release<br/>tag: desktop-v&lt;version&gt;]
+    M --> R[GitHub Release<br/>tag: v&lt;version&gt;]
 ```
 
 **Triggers**
@@ -117,10 +117,10 @@ flowchart LR
 | --- | --- |
 | `schedule` (daily) | Checks the npm registry; only builds when a newer `@deepseek-ai/dsh` exists. |
 | `workflow_dispatch` | Manual build. Optional `upstream` input forces a specific engine version; without it, the current pin is rebuilt with an incremented desktop patch. |
-| push of `desktop-v*` tag | Builds and releases that exact version (hotfixes, first-time bootstrap). |
+| push of `v*` tag | Builds and releases that exact version (hotfixes and bootstrap; legacy `desktop-v*` remains supported). |
 | `repository_dispatch: upstream-published` | Optional fast path: if the upstream repo (or your fork of it) ever sends this event on publish, the build starts immediately instead of waiting for the next cron run. |
 
-**Versioning.** Desktop versions mirror the embedded engine: upstream `0.1.0-rc.6` → desktop `0.1.0-rc.6.0`; a desktop-only rebuild increments the last segment (`…rc.6.1`). Release tags are `desktop-v<version>`, which keeps them separate from upstream tags.
+**Versioning.** Desktop versions mirror the embedded engine: upstream `0.1.0-rc.6` → desktop `0.1.0-rc.6.0`; a desktop-only rebuild increments the last segment (`…rc.6.1`). Release tags use the semver-compatible form `v<version>` so `electron-updater` can discover releases in the personal repository; legacy `desktop-v<version>` tags still trigger builds.
 
 **Optional upstream hook.** To publish desktop builds the moment upstream releases (instead of within 24 h via cron), add this step to the upstream repository's release workflow:
 

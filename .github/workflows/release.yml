@@ -8,8 +8,10 @@ name: Release
 #   workflow_dispatch  manual build. Optional `upstream` input forces a
 #                     specific upstream version; otherwise the current pin is
 #                     rebuilt with an incremented desktop patch segment.
-#   push (desktop-v*)  pushing a desktop-v* tag builds and releases that exact
-#                     version (used for hotfixes and first-time bootstrap).
+#   push (v*)          pushing a semver-compatible v* tag builds and releases
+#                     that exact version (used for hotfixes and bootstrap).
+#   push (desktop-v*)  legacy trigger kept for existing automation; new
+#                     releases use v* so electron-updater can parse the tag.
 #   repository_dispatch upstream-published — optional webhook hook: if the
 #                     deepseek-harness repo (or a fork) ever dispatches this
 #                     event on publish, the release starts immediately
@@ -32,6 +34,7 @@ on:
     - cron: '23 3 * * *'
   push:
     tags:
+      - 'v*'
       - 'desktop-v*'
   repository_dispatch:
     types: [upstream-published]
@@ -179,7 +182,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: desktop-v${{ needs.plan.outputs.version }}
+          # electron-updater rejects non-semver prefixes such as desktop-v.
+          tag_name: v${{ needs.plan.outputs.version }}
           name: DeepSeek Harness Desktop v${{ needs.plan.outputs.version }}
           draft: false
           prerelease: ${{ contains(needs.plan.outputs.version, '-') }}

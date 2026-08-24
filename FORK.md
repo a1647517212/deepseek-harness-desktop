@@ -64,7 +64,7 @@
 - 本地工作副本:C:/Users/page/OneDrive/文档-综合/学习资料/AI相关/ai量化学习v2/deepseek-harness-desktop(origin=自己的仓库,upstream=原作者仓库)
 - 首次发布:**v0.1.0-rc.6.1**(2026-08-14,Pre-release,含 latest.yml),构建 run 31824189764 全绿
 - 内嵌引擎:@deepseek-ai/dsh 0.1.0-rc.6(精确固定)
-- 版本规则:桌面版本镜像引擎——上游 0.1.0-rc.7 → 桌面 0.1.0-rc.7.0;仅桌面重建递增末段(rc.6.1 → rc.6.2);发布标签 desktop-v<版本>
+- 版本规则:桌面版本镜像引擎——上游 0.1.0-rc.7 → 桌面 0.1.0-rc.7.0;仅桌面重建递增末段(rc.6.1 → rc.6.2);发布标签使用 electron-updater 可解析的 v<版本>，同时兼容旧 desktop-v<版本> 触发器
 - 已安装应用:需要手动下载首次安装包安装(版本 ≥ 0.1.0-rc.6.1);此后更新走应用内自动更新
 
 ---
@@ -82,7 +82,7 @@ npm registry(@deepseek-ai/dsh 及插件,新版本出现 → 自动固定 + 构�
 触发方式:
 1. **自动**:schedule 每日 03:23 UTC —— 有新引擎版本才构建,无变化不动;
 2. **手动**:gh workflow run release.yml -R a1647517212/deepseek-harness-desktop —— 无参数时自动采纳 npm 新版本,无新版本则补丁重建(+1);
-3. **精确**:推 tag desktop-v<版本> 构建指定版本。
+3. **精确**:推 tag v<版本> 构建指定版本（旧 desktop-v<版本> 仍兼容）。
 
 ---
 

@@ -5,7 +5,8 @@
  * Reads the trigger context from environment variables (set by the workflow)
  * and the upstream check outputs, then decides one of:
  *
- * - `tag`      — a `desktop-v*` tag was pushed; build and release that version.
+ * - `tag`      — a semver-compatible `v*` tag (or legacy `desktop-v*` tag)
+ *                was pushed; build and release that version.
  * - `upstream` — a newer `@deepseek-ai/dsh` exists (or was forced); pin it,
  *                set the app version to `<upstream>.0`, refresh the lockfile.
  * - `patch`    — manual dispatch with nothing newer: desktop-only rebuild with
@@ -23,6 +24,7 @@ import semver from 'semver'
 
 const PACKAGE_PATH = new URL('../package.json', import.meta.url)
 const DSH_PACKAGE = '@deepseek-ai/dsh'
+const DSH_FAMILY_PREFIX = '@deepseek-ai/dsh-'
 
 const env = {
   event: process.env.EVENT ?? '',
@@ -34,12 +36,13 @@ const env = {
 
 const pkg = JSON.parse(readFileSync(PACKAGE_PATH, 'utf8'))
 const pinned = pkg.dependencies?.[DSH_PACKAGE] ?? ''
+const tagVersion = env.ref.match(/^refs\/tags\/(?:desktop-)?v(.+)$/)?.[1] ?? ''
 
 /** One decided action plus the values the workflow consumes. */
 let mode = 'none'
 let upstream = pinned
 
-if (env.ref.startsWith('refs/tags/desktop-v')) {
+if (tagVersion !== '') {
   mode = 'tag'
 } else if (env.event === 'schedule') {
   if (env.update) {
@@ -85,11 +88,19 @@ function bumpPatch(version) {
   return parts.join('.')
 }
 
+/** Keep dynamically loaded DSH packages on the same exact prerelease. */
+function setUpstreamPins(pkg, version) {
+  pkg.dependencies[DSH_PACKAGE] = version
+  for (const name of Object.keys(pkg.dependencies)) {
+    if (name.startsWith(DSH_FAMILY_PREFIX)) pkg.dependencies[name] = version
+  }
+}
+
 if (mode === 'upstream') {
   // Desktop versions mirror the embedded engine: upstream 0.1.0-rc.7 ->
   // desktop 0.1.0-rc.7.0.
   pkg.version = `${upstream}.0`
-  pkg.dependencies[DSH_PACKAGE] = upstream
+  setUpstreamPins(pkg, upstream)
   writeFileSync(PACKAGE_PATH, `${JSON.stringify(pkg, null, 2)}\n`)
   quietNpmInstall()
 } else if (mode === 'patch') {
@@ -98,7 +109,7 @@ if (mode === 'upstream') {
   quietNpmInstall()
 }
 
-const version = mode === 'tag' ? env.ref.replace(/^refs\/tags\/desktop-v/, '') : pkg.version
+const version = mode === 'tag' ? tagVersion : pkg.version
 const build = mode === 'none' ? 'false' : 'true'
 const bump = mode === 'upstream' || mode === 'patch' ? 'true' : 'false'
 

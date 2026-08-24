@@ -18,6 +18,15 @@ import semver from 'semver'
 
 const PACKAGE_PATH = new URL('../package.json', import.meta.url)
 const DSH_PACKAGE = '@deepseek-ai/dsh'
+const DSH_FAMILY_PREFIX = '@deepseek-ai/dsh-'
+
+/** Keep dynamically loaded DSH packages on the same exact prerelease. */
+function setUpstreamPins(pkg, version) {
+  pkg.dependencies[DSH_PACKAGE] = version
+  for (const name of Object.keys(pkg.dependencies)) {
+    if (name.startsWith(DSH_FAMILY_PREFIX)) pkg.dependencies[name] = version
+  }
+}
 
 /** Parse the CLI flags this script accepts. @returns the resolved mode. */
 function parseArgs(argv) {
@@ -55,7 +64,7 @@ if (args.mode === 'patch') {
     process.exit(1)
   }
   pkg.version = `${args.upstream}.0`
-  pkg.dependencies[DSH_PACKAGE] = args.upstream
+  setUpstreamPins(pkg, args.upstream)
 }
 
 writeFileSync(PACKAGE_PATH, `${JSON.stringify(pkg, null, 2)}\n`)

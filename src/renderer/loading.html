@@ -28,13 +28,6 @@
     <div class="spinner" aria-hidden="true"></div>
     <p class="meta" id="meta">Desktop <span id="app-version">…</span> &middot; harness <span id="dsh-version">…</span></p>
   </div>
-  <script>
-    if (window.desktop) {
-      window.desktop.getInfo().then((info) => {
-        document.getElementById('app-version').textContent = info.appVersion;
-        document.getElementById('dsh-version').textContent = info.dshVersion;
-      }).catch(() => {});
-    }
-  </script>
+  <script src="./loading.js"></script>
 </body>
 </html>
