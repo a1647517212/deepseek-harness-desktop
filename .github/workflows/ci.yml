@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     # Both names: repositories whose default branch was created before
     # GitHub's main-rename keep `master`.
